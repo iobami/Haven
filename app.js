@@ -18,15 +18,16 @@ process.env.TALENT_POOL_SESSION_COOKIEKEY = key(64);
 const db = require('./Models');
 require('./config/passport');
 const { seedSuperAdmin } = require('./Utils/seed');
-const authRoutes = require('./Routes/auth/auth');
+
 const employeeRoutes = require('./Routes/employee/index');
 const employerRoutes = require('./Routes/employer/index');
 const externalPages = require('./Routes');
-const auth = require('./Routes/auth');
+const authRoutes = require('./Routes/auth');
 const adminRoutes = require('./Routes/admin/index');
 
 const csrfProtection = csrf();
 const app = express();
+app.locals.moment = require('moment');
 
 app.use(
   cookieSession({
@@ -67,6 +68,7 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
+
 app.use(csrfProtection);
 app.use((req, res, next) => {
   const token = req.csrfToken();
@@ -75,12 +77,13 @@ app.use((req, res, next) => {
   next();
 });
 app.use(methodOverride('_method'));
+
 // ************ REGISTER ROUTES HERE ********** //
-app.use(authRoutes);
-app.use('/', auth);
-app.use(authRoutes);
+app.use('/', authRoutes);
 app.use('/', externalPages);
 app.use('/employee', employeeRoutes);
+app.use('/admin', adminRoutes);
+
 app.use('/employer', employerRoutes);
 app.use('/admin', adminRoutes);
 // ************ END ROUTE REGISTRATION ********** //
