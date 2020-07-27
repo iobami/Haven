@@ -7,8 +7,7 @@ const home = (req, res) => {
     lastName: 'Doe',
     pageName:'Home',
   }
-
-  renderPage(res, 'index', data, 'Demo Page')
+  renderPage(res, 'admin/adminDashboardVerification', data, 'Demo Page')
 };
 
 module.exports.home = home;
