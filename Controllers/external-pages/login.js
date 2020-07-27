@@ -23,7 +23,7 @@ const loginPage = (req, res) => {
     },
     validationErrors: [],
   };
-  renderPage(res, 'auth/login', data, 'Login', '');
+  renderPage(res, 'employer/employerPrivacySettings', data, 'Login', '');
 };
 
 module.exports.loginPage = loginPage;
